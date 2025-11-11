@@ -18,3 +18,5 @@ Para el desarrollo de esta aplicación se utilizarán las siguientes tecnología
 ## 3. Desarrolladores
 
 *   **Luis Eduardo Soto García** - [lesg1151860](https://github.com/lesg1151860)
+*   **Fredy Gustavo Peñaranda Durán** - [Frd1029](https://github.com/Frd1029)
+*   **Diego Armando Marquez Rigaud** - [marud21](https://github.com/marud21)
