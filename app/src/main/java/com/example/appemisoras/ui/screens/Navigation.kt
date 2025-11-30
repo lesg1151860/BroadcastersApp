@@ -4,11 +4,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavDestination.Companion.hierarchy
@@ -42,7 +44,9 @@ fun AppNavigation() {
     val navController = rememberNavController()
     Scaffold(
         bottomBar = {
-            NavigationBar {
+            NavigationBar(
+                containerColor = Color.Black
+            ) {
                 val navBackStackEntry by navController.currentBackStackEntryAsState()
                 val currentDestination = navBackStackEntry?.destination
                 items.forEach { screen ->
@@ -58,7 +62,13 @@ fun AppNavigation() {
                                 launchSingleTop = true
                                 restoreState = true
                             }
-                        }
+                        },
+                        colors = NavigationBarItemDefaults.colors(
+                            selectedIconColor = Color.White,
+                            unselectedIconColor = Color.Gray,
+                            selectedTextColor = Color.White,
+                            unselectedTextColor = Color.Gray
+                        )
                     )
                 }
             }
@@ -70,9 +80,9 @@ fun AppNavigation() {
             modifier = Modifier.padding(innerPadding)
         ) {
             composable(AppScreens.Home.route) { HomeScreen() }
-            composable(AppScreens.Search.route) { BuscarScreen() }
-            composable(AppScreens.Library.route) { BibliotecaScreen() }
-            composable(AppScreens.Account.route) { TuCuentaScreen() }
+            composable(AppScreens.Search.route) { SearchScreen() }
+            composable(AppScreens.Library.route) { Text("Library Screen") }
+            composable(AppScreens.Account.route) { Text("Account Screen") }
         }
     }
 }
