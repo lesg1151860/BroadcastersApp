@@ -1,3 +1,18 @@
 <resources>
     <string name="app_name">AppEmisoras</string>
+    <string name="recent_stations">Emisoras Recientes</string>
+    <string name="search_similar">Buscar parecidas</string>
+    <string name="calasanz_school">Colegio Calasanz</string>
+    <string name="tune_in_now">Sintonizar ahora</string>
+    <string name="station_sagrado_corazon">I.E. Sagrado Corazón de Jesus</string>
+    <string name="presenters">Locutores</string>
+    <string name="station_normal_superior">Escuela Normal Superior María Auxiliadora</string>
+    <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce eget nulla id sapien suscipit eleifend.</string>
+    <string name="icon_add">+</string>
+    <string name="cd_home">Inicio</string>
+    <string name="cd_search">Buscar</string>
+    <string name="cd_library">Biblioteca</string>
+    <string name="cd_account">Tu cuenta</string>
+    <string name="cd_play">Play</string>
+    <string name="cd_chart">Chart</string>
 </resources>
