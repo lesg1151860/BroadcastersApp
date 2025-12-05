@@ -28,22 +28,48 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.appemisoras.ui.theme.AppEmisorasTheme
 
+data class UserProfile(
+    val firstName: String,
+    val lastName: String,
+    val school: String,
+    val phone: String,
+    val email: String
+)
+
 @Composable
 fun TuCuentaScreen() {
+    var userProfile by remember {
+        mutableStateOf(
+            UserProfile(
+                firstName = "Juanito",
+                lastName = "Trump",
+                school = "I.E. Santo Domingo",
+                phone = "3001234567",
+                email = "juanito@email.com"
+            )
+        )
+    }
     var isEditing by remember { mutableStateOf(false) }
 
     if (isEditing) {
         AccountEditScreen(
-            onUpdateClick = { isEditing = false },
+            userProfile = userProfile,
+            onUpdateClick = { updatedProfile ->
+                userProfile = updatedProfile
+                isEditing = false
+            },
             onBackClick = { isEditing = false }
         )
     } else {
-        AccountDisplayScreen(onEditClick = { isEditing = true })
+        AccountDisplayScreen(
+            userProfile = userProfile,
+            onEditClick = { isEditing = true }
+        )
     }
 }
 
 @Composable
-fun AccountDisplayScreen(onEditClick: () -> Unit) {
+fun AccountDisplayScreen(userProfile: UserProfile, onEditClick: () -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -68,13 +94,13 @@ fun AccountDisplayScreen(onEditClick: () -> Unit) {
         )
         Spacer(modifier = Modifier.height(24.dp))
         Text(
-            text = "Juanito Trump",
+            text = "${userProfile.firstName} ${userProfile.lastName}",
             color = Color.White,
             fontSize = 30.sp,
             fontWeight = FontWeight.W400
         )
         Text(
-            text = "I.E. Santo Domingo",
+            text = userProfile.school,
             color = Color.White,
             fontSize = 18.sp,
             fontWeight = FontWeight.W400
@@ -103,11 +129,15 @@ fun AccountDisplayScreen(onEditClick: () -> Unit) {
 }
 
 @Composable
-fun AccountEditScreen(onUpdateClick: () -> Unit, onBackClick: () -> Unit) {
-    var nombre by remember { mutableStateOf("Juanito") }
-    var apellido by remember { mutableStateOf("Trump") }
-    var celular by remember { mutableStateOf("3001234567") }
-    var correo by remember { mutableStateOf("juanito@email.com") }
+fun AccountEditScreen(
+    userProfile: UserProfile,
+    onUpdateClick: (UserProfile) -> Unit,
+    onBackClick: () -> Unit
+) {
+    var nombre by remember { mutableStateOf(userProfile.firstName) }
+    var apellido by remember { mutableStateOf(userProfile.lastName) }
+    var celular by remember { mutableStateOf(userProfile.phone) }
+    var correo by remember { mutableStateOf(userProfile.email) }
 
     Column(
         modifier = Modifier
@@ -210,7 +240,15 @@ fun AccountEditScreen(onUpdateClick: () -> Unit, onBackClick: () -> Unit) {
 
         Spacer(modifier = Modifier.weight(1f))
         Button(
-            onClick = onUpdateClick,
+            onClick = {
+                val updatedProfile = userProfile.copy(
+                    firstName = nombre,
+                    lastName = apellido,
+                    phone = celular,
+                    email = correo
+                )
+                onUpdateClick(updatedProfile)
+            },
             modifier = Modifier.align(Alignment.CenterHorizontally),
             shape = RoundedCornerShape(8.dp),
             colors = ButtonDefaults.buttonColors(containerColor = Color.White)
@@ -221,20 +259,25 @@ fun AccountEditScreen(onUpdateClick: () -> Unit, onBackClick: () -> Unit) {
     }
 }
 
-
 @Preview(showBackground = true, device = "spec:width=411dp,height=891dp")
 @Composable
 fun AccountDisplayScreenPreview() {
     AppEmisorasTheme {
-        AccountDisplayScreen(onEditClick = {})
+        AccountDisplayScreen(
+            userProfile = UserProfile("Juanito", "Trump", "I.E. Santo Domingo", "300", "a@a.com"),
+            onEditClick = {}
+        )
     }
 }
-
 
 @Preview(showBackground = true, device = "spec:width=411dp,height=891dp")
 @Composable
 fun AccountEditScreenPreview() {
     AppEmisorasTheme {
-        AccountEditScreen(onUpdateClick = {}, onBackClick = {})
+        AccountEditScreen(
+             userProfile = UserProfile("Juanito", "Trump", "I.E. Santo Domingo", "300", "a@a.com"),
+             onUpdateClick = {},
+             onBackClick = {}
+        )
     }
 }
