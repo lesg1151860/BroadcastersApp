@@ -83,7 +83,7 @@ fun AppNavigation() {
             composable(AppScreens.Home.route) { HomeScreen() }
             composable(AppScreens.Search.route) { SearchScreen() }
             composable(AppScreens.Library.route) { BibliotecaScreen() }
-            composable(AppScreens.Account.route) { Text("Account Screen") }
+            composable(AppScreens.Account.route) { TuCuentaScreen() }
         }
     }
 }
