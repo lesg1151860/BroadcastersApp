@@ -67,6 +67,111 @@ fun SearchScreen() {
             presentersRes = R.string.presenters_placeholder,
             imageUrl = "",
             descriptionRes = 0
+        ),
+        Station(
+            logoUrl = "https://placehold.co/80x80",
+            stationNameRes = R.string.station_colegio_x,
+            presentersRes = R.string.presenters_placeholder,
+            imageUrl = "", // Not used in this list item
+            descriptionRes = 0 // Not used in this list item
+        ),
+        Station(
+            logoUrl = "https://placehold.co/80x80",
+            stationNameRes = R.string.station_colegio_x,
+            presentersRes = R.string.presenters_placeholder,
+            imageUrl = "",
+            descriptionRes = 0
+        ),
+        Station(
+            logoUrl = "https://placehold.co/80x80",
+            stationNameRes = R.string.station_colegio_x,
+            presentersRes = R.string.presenters_placeholder,
+            imageUrl = "",
+            descriptionRes = 0
+        ),
+        Station(
+            logoUrl = "https://placehold.co/80x80",
+            stationNameRes = R.string.station_colegio_x,
+            presentersRes = R.string.presenters_placeholder,
+            imageUrl = "",
+            descriptionRes = 0
+        ),
+        Station(
+            logoUrl = "https://placehold.co/80x80",
+            stationNameRes = R.string.station_colegio_x,
+            presentersRes = R.string.presenters_placeholder,
+            imageUrl = "",
+            descriptionRes = 0
+        ),
+        Station(
+            logoUrl = "https://placehold.co/80x80",
+            stationNameRes = R.string.station_colegio_x,
+            presentersRes = R.string.presenters_placeholder,
+            imageUrl = "", // Not used in this list item
+            descriptionRes = 0 // Not used in this list item
+        ),
+        Station(
+            logoUrl = "https://placehold.co/80x80",
+            stationNameRes = R.string.station_colegio_x,
+            presentersRes = R.string.presenters_placeholder,
+            imageUrl = "",
+            descriptionRes = 0
+        ),
+        Station(
+            logoUrl = "https://placehold.co/80x80",
+            stationNameRes = R.string.station_colegio_x,
+            presentersRes = R.string.presenters_placeholder,
+            imageUrl = "",
+            descriptionRes = 0
+        ),
+        Station(
+            logoUrl = "https://placehold.co/80x80",
+            stationNameRes = R.string.station_colegio_x,
+            presentersRes = R.string.presenters_placeholder,
+            imageUrl = "",
+            descriptionRes = 0
+        ),
+        Station(
+            logoUrl = "https://placehold.co/80x80",
+            stationNameRes = R.string.station_colegio_x,
+            presentersRes = R.string.presenters_placeholder,
+            imageUrl = "",
+            descriptionRes = 0
+        ),
+        Station(
+            logoUrl = "https://placehold.co/80x80",
+            stationNameRes = R.string.station_colegio_x,
+            presentersRes = R.string.presenters_placeholder,
+            imageUrl = "", // Not used in this list item
+            descriptionRes = 0 // Not used in this list item
+        ),
+        Station(
+            logoUrl = "https://placehold.co/80x80",
+            stationNameRes = R.string.station_colegio_x,
+            presentersRes = R.string.presenters_placeholder,
+            imageUrl = "",
+            descriptionRes = 0
+        ),
+        Station(
+            logoUrl = "https://placehold.co/80x80",
+            stationNameRes = R.string.station_colegio_x,
+            presentersRes = R.string.presenters_placeholder,
+            imageUrl = "",
+            descriptionRes = 0
+        ),
+        Station(
+            logoUrl = "https://placehold.co/80x80",
+            stationNameRes = R.string.station_colegio_x,
+            presentersRes = R.string.presenters_placeholder,
+            imageUrl = "",
+            descriptionRes = 0
+        ),
+        Station(
+            logoUrl = "https://placehold.co/80x80",
+            stationNameRes = R.string.station_colegio_x,
+            presentersRes = R.string.presenters_placeholder,
+            imageUrl = "",
+            descriptionRes = 0
         )
     )
 

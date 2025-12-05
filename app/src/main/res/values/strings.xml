@@ -25,4 +25,8 @@
     <string name="station_colegio_x">Colegio x</string>
     <string name="presenters_placeholder">-----------------</string>
     <string name="cd_add_playlist">Agregar a playlist</string>
+    <string name="favorite_stations_title">Emisoras preferidas</string>
+    <string name="cd_recents">Recientes</string>
+    <string name="recents_title">Recientes</string>
+    <string name="add_more">Agregar mas +</string>
 </resources>

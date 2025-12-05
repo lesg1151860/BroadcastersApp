@@ -20,6 +20,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.appemisoras.R
+import com.example.appemisoras.ui.screens.BibliotecaScreen
 
 sealed class AppScreens(
     val route: String,
@@ -81,7 +82,7 @@ fun AppNavigation() {
         ) {
             composable(AppScreens.Home.route) { HomeScreen() }
             composable(AppScreens.Search.route) { SearchScreen() }
-            composable(AppScreens.Library.route) { Text("Library Screen") }
+            composable(AppScreens.Library.route) { BibliotecaScreen() }
             composable(AppScreens.Account.route) { Text("Account Screen") }
         }
     }
