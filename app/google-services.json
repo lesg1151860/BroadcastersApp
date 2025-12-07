@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "961074103548",
+    "project_id": "appemisoras-70fba",
+    "storage_bucket": "appemisoras-70fba.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:961074103548:android:89a7fb3f3af187e36d4379",
+        "android_client_info": {
+          "package_name": "com.example.appemisoras"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBdvhkwpqFwfeqWEpRviV1siwXF1IyvdiE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -32,12 +32,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
 import com.example.appemisoras.R
 import com.example.appemisoras.data.Station
 
 @Composable
-fun BibliotecaScreen(navController: NavController) {
+fun BibliotecaScreen() {
     val favoriteStations = listOf(
         Station(stationNameRes = R.string.station_colegio_x, presentersRes = R.string.presenters_placeholder, logoUrl = "", imageUrl = "", descriptionRes = 0),
         Station(stationNameRes = R.string.station_colegio_x, presentersRes = R.string.presenters_placeholder, logoUrl = "", imageUrl = "", descriptionRes = 0),
@@ -99,7 +98,7 @@ fun BibliotecaScreen(navController: NavController) {
             verticalArrangement = Arrangement.spacedBy(15.dp)
         ) {
             items(favoriteStations) { station ->
-                FavoriteStationItem(station = station, navController = navController)
+                FavoriteStationItem(station = station)
             }
         }
         Spacer(modifier = Modifier.height(16.dp))
@@ -118,7 +117,7 @@ fun BibliotecaScreen(navController: NavController) {
 }
 
 @Composable
-fun FavoriteStationItem(station: Station, navController: NavController) {
+fun FavoriteStationItem(station: Station) {
     Row(
         modifier = Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically
@@ -144,7 +143,7 @@ fun FavoriteStationItem(station: Station, navController: NavController) {
         }
         Spacer(modifier = Modifier.width(16.dp))
         IconButton(
-            onClick = { navController.navigate(AppScreens.Player.route) },
+            onClick = { /*TODO*/ },
             modifier = Modifier
                 .size(48.dp)
                 .background(Color.White, CircleShape)
@@ -162,7 +161,5 @@ fun FavoriteStationItem(station: Station, navController: NavController) {
 @Preview(showBackground = true, device = "spec:width=411dp,height=891dp")
 @Composable
 fun BibliotecaScreenPreview() {
-    // AppEmisorasTheme {
-    //     BibliotecaScreen()
-    // }
+    BibliotecaScreen()
 }
