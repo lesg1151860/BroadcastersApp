@@ -15,22 +15,23 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.appemisoras.R
-import com.example.appemisoras.ui.screens.BibliotecaScreen
 
 sealed class AppScreens(
     val route: String,
-    val title: Int,
-    val icon: Int
+    val title: Int? = null,
+    val icon: Int? = null
 ) {
     object Home : AppScreens("home", R.string.home, R.drawable.ic_home)
     object Search : AppScreens("search", R.string.search, R.drawable.ic_search)
     object Library : AppScreens("library", R.string.library, R.drawable.ic_library)
     object Account : AppScreens("account", R.string.account, R.drawable.ic_account)
+    object Player : AppScreens("player")
 }
 
 val items = listOf(
@@ -43,34 +44,42 @@ val items = listOf(
 @Composable
 fun AppNavigation() {
     val navController = rememberNavController()
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentDestination = navBackStackEntry?.destination
+
+    val showBottomBar = when (currentDestination?.route) {
+        AppScreens.Player.route -> false
+        else -> true
+    }
+
     Scaffold(
         bottomBar = {
-            NavigationBar(
-                containerColor = Color.Black
-            ) {
-                val navBackStackEntry by navController.currentBackStackEntryAsState()
-                val currentDestination = navBackStackEntry?.destination
-                items.forEach { screen ->
-                    NavigationBarItem(
-                        icon = { Icon(painterResource(id = screen.icon), contentDescription = stringResource(id = screen.title)) },
-                        label = { Text(stringResource(id = screen.title)) },
-                        selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true,
-                        onClick = {
-                            navController.navigate(screen.route) {
-                                popUpTo(navController.graph.findStartDestination().id) {
-                                    saveState = true
+            if (showBottomBar) {
+                NavigationBar(
+                    containerColor = Color.Black
+                ) {
+                    items.forEach { screen ->
+                        NavigationBarItem(
+                            icon = { screen.icon?.let { Icon(painterResource(id = it), contentDescription = screen.title?.let { title -> stringResource(id = title) }) } },
+                            label = { screen.title?.let { Text(stringResource(id = it)) } },
+                            selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true,
+                            onClick = {
+                                navController.navigate(screen.route) {
+                                    popUpTo(navController.graph.findStartDestination().id) {
+                                        saveState = true
+                                    }
+                                    launchSingleTop = true
+                                    restoreState = true
                                 }
-                                launchSingleTop = true
-                                restoreState = true
-                            }
-                        },
-                        colors = NavigationBarItemDefaults.colors(
-                            selectedIconColor = Color.White,
-                            unselectedIconColor = Color.Gray,
-                            selectedTextColor = Color.White,
-                            unselectedTextColor = Color.Gray
+                            },
+                            colors = NavigationBarItemDefaults.colors(
+                                selectedIconColor = Color.White,
+                                unselectedIconColor = Color.Gray,
+                                selectedTextColor = Color.White,
+                                unselectedTextColor = Color.Gray
+                            )
                         )
-                    )
+                    }
                 }
             }
         }
@@ -80,10 +89,11 @@ fun AppNavigation() {
             startDestination = AppScreens.Home.route,
             modifier = Modifier.padding(innerPadding)
         ) {
-            composable(AppScreens.Home.route) { HomeScreen() }
-            composable(AppScreens.Search.route) { SearchScreen() }
-            composable(AppScreens.Library.route) { BibliotecaScreen() }
+            composable(AppScreens.Home.route) { HomeScreen(navController) }
+            composable(AppScreens.Search.route) { SearchScreen(navController) }
+            composable(AppScreens.Library.route) { BibliotecaScreen(navController) }
             composable(AppScreens.Account.route) { TuCuentaScreen() }
+            composable(AppScreens.Player.route) { PlayerScreen(onBackClick = { navController.popBackStack() }) }
         }
     }
 }

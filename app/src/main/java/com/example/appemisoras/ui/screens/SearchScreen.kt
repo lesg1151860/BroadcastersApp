@@ -24,13 +24,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import com.example.appemisoras.R
 import com.example.appemisoras.data.Station
 import com.example.appemisoras.ui.theme.AppEmisorasTheme
 
 @Composable
-fun SearchScreen() {
+fun SearchScreen(navController: NavController) {
     // Sample list of stations for the search screen
     val stations = listOf(
         Station(
@@ -62,111 +63,6 @@ fun SearchScreen() {
             descriptionRes = 0
         ),
          Station(
-            logoUrl = "https://placehold.co/80x80",
-            stationNameRes = R.string.station_colegio_x,
-            presentersRes = R.string.presenters_placeholder,
-            imageUrl = "",
-            descriptionRes = 0
-        ),
-        Station(
-            logoUrl = "https://placehold.co/80x80",
-            stationNameRes = R.string.station_colegio_x,
-            presentersRes = R.string.presenters_placeholder,
-            imageUrl = "", // Not used in this list item
-            descriptionRes = 0 // Not used in this list item
-        ),
-        Station(
-            logoUrl = "https://placehold.co/80x80",
-            stationNameRes = R.string.station_colegio_x,
-            presentersRes = R.string.presenters_placeholder,
-            imageUrl = "",
-            descriptionRes = 0
-        ),
-        Station(
-            logoUrl = "https://placehold.co/80x80",
-            stationNameRes = R.string.station_colegio_x,
-            presentersRes = R.string.presenters_placeholder,
-            imageUrl = "",
-            descriptionRes = 0
-        ),
-        Station(
-            logoUrl = "https://placehold.co/80x80",
-            stationNameRes = R.string.station_colegio_x,
-            presentersRes = R.string.presenters_placeholder,
-            imageUrl = "",
-            descriptionRes = 0
-        ),
-        Station(
-            logoUrl = "https://placehold.co/80x80",
-            stationNameRes = R.string.station_colegio_x,
-            presentersRes = R.string.presenters_placeholder,
-            imageUrl = "",
-            descriptionRes = 0
-        ),
-        Station(
-            logoUrl = "https://placehold.co/80x80",
-            stationNameRes = R.string.station_colegio_x,
-            presentersRes = R.string.presenters_placeholder,
-            imageUrl = "", // Not used in this list item
-            descriptionRes = 0 // Not used in this list item
-        ),
-        Station(
-            logoUrl = "https://placehold.co/80x80",
-            stationNameRes = R.string.station_colegio_x,
-            presentersRes = R.string.presenters_placeholder,
-            imageUrl = "",
-            descriptionRes = 0
-        ),
-        Station(
-            logoUrl = "https://placehold.co/80x80",
-            stationNameRes = R.string.station_colegio_x,
-            presentersRes = R.string.presenters_placeholder,
-            imageUrl = "",
-            descriptionRes = 0
-        ),
-        Station(
-            logoUrl = "https://placehold.co/80x80",
-            stationNameRes = R.string.station_colegio_x,
-            presentersRes = R.string.presenters_placeholder,
-            imageUrl = "",
-            descriptionRes = 0
-        ),
-        Station(
-            logoUrl = "https://placehold.co/80x80",
-            stationNameRes = R.string.station_colegio_x,
-            presentersRes = R.string.presenters_placeholder,
-            imageUrl = "",
-            descriptionRes = 0
-        ),
-        Station(
-            logoUrl = "https://placehold.co/80x80",
-            stationNameRes = R.string.station_colegio_x,
-            presentersRes = R.string.presenters_placeholder,
-            imageUrl = "", // Not used in this list item
-            descriptionRes = 0 // Not used in this list item
-        ),
-        Station(
-            logoUrl = "https://placehold.co/80x80",
-            stationNameRes = R.string.station_colegio_x,
-            presentersRes = R.string.presenters_placeholder,
-            imageUrl = "",
-            descriptionRes = 0
-        ),
-        Station(
-            logoUrl = "https://placehold.co/80x80",
-            stationNameRes = R.string.station_colegio_x,
-            presentersRes = R.string.presenters_placeholder,
-            imageUrl = "",
-            descriptionRes = 0
-        ),
-        Station(
-            logoUrl = "https://placehold.co/80x80",
-            stationNameRes = R.string.station_colegio_x,
-            presentersRes = R.string.presenters_placeholder,
-            imageUrl = "",
-            descriptionRes = 0
-        ),
-        Station(
             logoUrl = "https://placehold.co/80x80",
             stationNameRes = R.string.station_colegio_x,
             presentersRes = R.string.presenters_placeholder,
@@ -225,7 +121,7 @@ fun SearchScreen() {
                 verticalArrangement = Arrangement.spacedBy(15.dp)
             ) {
                 items(stations) { station ->
-                    StationSearchItem(station = station)
+                    StationSearchItem(station = station, navController = navController)
                 }
             }
         }
@@ -233,7 +129,7 @@ fun SearchScreen() {
 }
 
 @Composable
-fun StationSearchItem(station: Station) {
+fun StationSearchItem(station: Station, navController: NavController) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -264,7 +160,7 @@ fun StationSearchItem(station: Station) {
         }
         Spacer(modifier = Modifier.width(16.dp))
         IconButton(
-            onClick = { /*TODO*/ },
+            onClick = { navController.navigate(AppScreens.Player.route) },
             modifier = Modifier
                 .size(48.dp)
                 .background(Color.White, CircleShape)
@@ -292,6 +188,6 @@ fun StationSearchItem(station: Station) {
 @Composable
 fun SearchScreenPreview() {
     AppEmisorasTheme {
-        SearchScreen()
+       // SearchScreen()
     }
 }

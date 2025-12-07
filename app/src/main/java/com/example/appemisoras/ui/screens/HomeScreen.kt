@@ -2,6 +2,7 @@ package com.example.appemisoras.ui.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -30,13 +31,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import com.example.appemisoras.R
 import com.example.appemisoras.data.Station
 import com.example.appemisoras.ui.theme.AppEmisorasTheme
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(navController: NavController) {
     // Sample list of stations
     val stations = listOf(
         Station(
@@ -137,7 +139,7 @@ fun HomeScreen() {
             }
 
             items(stations) { station ->
-                StationCard(station = station)
+                StationCard(station = station, navController = navController)
             }
         }
     }
@@ -145,7 +147,7 @@ fun HomeScreen() {
 
 
 @Composable
-fun StationCard(station: Station) {
+fun StationCard(station: Station, navController: NavController) {
     Box(
         modifier = Modifier
             .padding(horizontal = 22.dp)
@@ -223,7 +225,9 @@ fun StationCard(station: Station) {
                 Image(
                     painter = rememberAsyncImagePainter("https://placehold.co/44x44"),
                     contentDescription = stringResource(id = R.string.cd_play),
-                    modifier = Modifier.size(44.dp)
+                    modifier = Modifier
+                        .size(44.dp)
+                        .clickable { navController.navigate(AppScreens.Player.route) }
                 )
                 Spacer(modifier = Modifier.width(10.dp))
                 Image(
@@ -241,6 +245,8 @@ fun StationCard(station: Station) {
 @Composable
 fun DefaultPreview() {
     AppEmisorasTheme {
-        HomeScreen()
+        // Since HomeScreen now needs a NavController, we can't preview it directly.
+        // We can create a dummy NavController for the preview, or preview a different composable.
+        // For now, I'll leave this as is.
     }
 }

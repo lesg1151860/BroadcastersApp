@@ -1,0 +1,209 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="200dp"
+    android:height="50dp"
+    android:viewportWidth="200"
+    android:viewportHeight="50">
+
+  <group android:name="waveform">
+    <path
+        android:name="bar1"
+        android:fillColor="#FFFFFF"
+        android:pathData="M 2 25 L 2 25" />
+    <path
+        android:name="bar2"
+        android:fillColor="#FFFFFF"
+        android:pathData="M 6 25 L 6 25" />
+    <path
+        android:name="bar3"
+        android:fillColor="#FFFFFF"
+        android:pathData="M 10 25 L 10 25" />
+    <path
+        android:name="bar4"
+        android:fillColor="#FFFFFF"
+        android:pathData="M 14 25 L 14 25" />
+    <path
+        android:name="bar5"
+        android:fillColor="#FFFFFF"
+        android:pathData="M 18 25 L 18 25" />
+    <path
+        android:name="bar6"
+        android:fillColor="#FFFFFF"
+        android:pathData="M 22 25 L 22 25" />
+    <path
+        android:name="bar7"
+        android:fillColor="#FFFFFF"
+        android:pathData="M 26 25 L 26 25" />
+    <path
+        android:name="bar8"
+        android:fillColor="#FFFFFF"
+        android:pathData="M 30 25 L 30 25" />
+    <path
+        android:name="bar9"
+        android:fillColor="#FFFFFF"
+        android:pathData="M 34 25 L 34 25" />
+    <path
+        android:name="bar10"
+        android:fillColor="#FFFFFF"
+        android:pathData="M 38 25 L 38 25" />
+    <path
+        android:name="bar11"
+        android:fillColor="#FFFFFF"
+        android:pathData="M 42 25 L 42 25" />
+    <path
+        android:name="bar12"
+        android:fillColor="#FFFFFF"
+        android:pathData="M 46 25 L 46 25" />
+    <path
+        android:name="bar13"
+        android:fillColor="#FFFFFF"
+        android:pathData="M 50 25 L 50 25" />
+    <path
+        android:name="bar14"
+        android:fillColor="#FFFFFF"
+        android:pathData="M 54 25 L 54 25" />
+    <path
+        android:name="bar15"
+        android:fillColor="#FFFFFF"
+        android:pathData="M 58 25 L 58 25" />
+    <path
+        android:name="bar16"
+        android:fillColor="#FFFFFF"
+        android:pathData="M 62 25 L 62 25" />
+    <path
+        android:name="bar17"
+        android:fillColor="#FFFFFF"
+        android:pathData="M 66 25 L 66 25" />
+    <path
+        android:name="bar18"
+        android:fillColor="#FFFFFF"
+        android:pathData="M 70 25 L 70 25" />
+    <path
+        android:name="bar19"
+        android:fillColor="#FFFFFF"
+        android:pathData="M 74 25 L 74 25" />
+    <path
+        android:name="bar20"
+        android:fillColor="#FFFFFF"
+        android:pathData="M 78 25 L 78 25" />
+    <path
+        android:name="bar21"
+        android:fillColor="#FFFFFF"
+        android:pathData="M 82 25 L 82 25" />
+    <path
+        android:name="bar22"
+        android:fillColor="#FFFFFF"
+        android:pathData="M 86 25 L 86 25" />
+    <path
+        android:name="bar23"
+        android:fillColor="#FFFFFF"
+        android:pathData="M 90 25 L 90 25" />
+    <path
+        android:name="bar24"
+        android:fillColor="#FFFFFF"
+        android:pathData="M 94 25 L 94 25" />
+    <path
+        android:name="bar25"
+        android:fillColor="#FFFFFF"
+        android:pathData="M 98 25 L 98 25" />
+    <path
+        android:name="bar26"
+        android:fillColor="#FFFFFF"
+        android:pathData="M 102 25 L 102 25" />
+    <path
+        android:name="bar27"
+        android:fillColor="#FFFFFF"
+        android:pathData="M 106 25 L 106 25" />
+    <path
+        android:name="bar28"
+        android:fillColor="#FFFFFF"
+        android:pathData="M 110 25 L 110 25" />
+    <path
+        android:name="bar29"
+        android:fillColor="#FFFFFF"
+        android:pathData="M 114 25 L 114 25" />
+    <path
+        android:name="bar30"
+        android:fillColor="#FFFFFF"
+        android:pathData="M 118 25 L 118 25" />
+    <path
+        android:name="bar31"
+        android:fillColor="#FFFFFF"
+        android:pathData="M 122 25 L 122 25" />
+    <path
+        android:name="bar32"
+        android:fillColor="#FFFFFF"
+        android:pathData="M 126 25 L 126 25" />
+    <path
+        android:name="bar33"
+        android:fillColor="#FFFFFF"
+        android:pathData="M 130 25 L 130 25" />
+    <path
+        android:name="bar34"
+        android:fillColor="#FFFFFF"
+        android:pathData="M 134 25 L 134 25" />
+    <path
+        android:name="bar35"
+        android:fillColor="#FFFFFF"
+        android:pathData="M 138 25 L 138 25" />
+    <path
+        android:name="bar36"
+        android:fillColor="#FFFFFF"
+        android:pathData="M 142 25 L 142 25" />
+    <path
+        android:name="bar37"
+        android:fillColor="#FFFFFF"
+        android:pathData="M 146 25 L 146 25" />
+    <path
+        android:name="bar38"
+        android:fillColor="#FFFFFF"
+        android:pathData="M 150 25 L 150 25" />
+    <path
+        android:name="bar39"
+        android:fillColor="#FFFFFF"
+        android:pathData="M 154 25 L 154 25" />
+    <path
+        android:name="bar40"
+        android:fillColor="#FFFFFF"
+        android:pathData="M 158 25 L 158 25" />
+    <path
+        android:name="bar41"
+        android:fillColor="#FFFFFF"
+        android:pathData="M 162 25 L 162 25" />
+    <path
+        android:name="bar42"
+        android:fillColor="#FFFFFF"
+        android:pathData="M 166 25 L 166 25" />
+    <path
+        android:name="bar43"
+        android:fillColor="#FFFFFF"
+        android:pathData="M 170 25 L 170 25" />
+    <path
+        android:name="bar44"
+        android:fillColor="#FFFFFF"
+        android:pathData="M 174 25 L 174 25" />
+    <path
+        android:name="bar45"
+        android:fillColor="#FFFFFF"
+        android:pathData="M 178 25 L 178 25" />
+    <path
+        android:name="bar46"
+        android:fillColor="#FFFFFF"
+        android:pathData="M 182 25 L 182 25" />
+    <path
+        android:name="bar47"
+        android:fillColor="#FFFFFF"
+        android:pathData="M 186 25 L 186 25" />
+    <path
+        android:name="bar48"
+        android:fillColor="#FFFFFF"
+        android:pathData="M 190 25 L 190 25" />
+    <path
+        android:name="bar49"
+        android:fillColor="#FFFFFF"
+        android:pathData="M 194 25 L 194 25" />
+    <path
+        android:name="bar50"
+        android:fillColor="#FFFFFF"
+        android:pathData="M 198 25 L 198 25" />
+  </group>
+</vector>
