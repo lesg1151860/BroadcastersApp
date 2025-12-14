@@ -24,6 +24,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import com.example.appemisoras.R
@@ -31,45 +32,10 @@ import com.example.appemisoras.data.Station
 import com.example.appemisoras.ui.theme.AppEmisorasTheme
 
 @Composable
-fun SearchScreen(navController: NavController) {
-    // Sample list of stations for the search screen
-    val stations = listOf(
-        Station(
-            logoUrl = "https://placehold.co/80x80",
-            stationNameRes = R.string.station_colegio_x,
-            presentersRes = R.string.presenters_placeholder,
-            imageUrl = "", // Not used in this list item
-            descriptionRes = 0 // Not used in this list item
-        ),
-        Station(
-            logoUrl = "https://placehold.co/80x80",
-            stationNameRes = R.string.station_colegio_x,
-            presentersRes = R.string.presenters_placeholder,
-            imageUrl = "",
-            descriptionRes = 0
-        ),
-        Station(
-            logoUrl = "https://placehold.co/80x80",
-            stationNameRes = R.string.station_colegio_x,
-            presentersRes = R.string.presenters_placeholder,
-            imageUrl = "",
-            descriptionRes = 0
-        ),
-        Station(
-            logoUrl = "https://placehold.co/80x80",
-            stationNameRes = R.string.station_colegio_x,
-            presentersRes = R.string.presenters_placeholder,
-            imageUrl = "",
-            descriptionRes = 0
-        ),
-         Station(
-            logoUrl = "https://placehold.co/80x80",
-            stationNameRes = R.string.station_colegio_x,
-            presentersRes = R.string.presenters_placeholder,
-            imageUrl = "",
-            descriptionRes = 0
-        )
-    )
+fun SearchScreen(navController: NavController, stationsViewModel: StationsViewModel = viewModel()) {
+    val stations by stationsViewModel.stations.collectAsState()
+    val isLoading by stationsViewModel.isLoading.collectAsState()
+    val error by stationsViewModel.error.collectAsState()
 
     var searchQuery by remember { mutableStateOf("") }
 
@@ -117,11 +83,18 @@ fun SearchScreen(navController: NavController) {
                 letterSpacing = 2.sp
             )
             Spacer(modifier = Modifier.height(17.dp))
-            LazyColumn(
-                verticalArrangement = Arrangement.spacedBy(15.dp)
-            ) {
-                items(stations) { station ->
-                    StationSearchItem(station = station, navController = navController)
+
+            if (isLoading) {
+                CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
+            } else if (error != null) {
+                Text(text = error!!, color = Color.Red, modifier = Modifier.align(Alignment.CenterHorizontally))
+            } else {
+                LazyColumn(
+                    verticalArrangement = Arrangement.spacedBy(15.dp)
+                ) {
+                    items(stations.filter { it.name.contains(searchQuery, ignoreCase = true) }) { station ->
+                        StationSearchItem(station = station, navController = navController)
+                    }
                 }
             }
         }
@@ -137,8 +110,8 @@ fun StationSearchItem(station: Station, navController: NavController) {
         verticalAlignment = Alignment.CenterVertically
     ) {
         Image(
-            painter = rememberAsyncImagePainter(station.logoUrl),
-            contentDescription = null,
+            painter = rememberAsyncImagePainter(model = station.logoURL),
+            contentDescription = station.name,
             modifier = Modifier
                 .size(80.dp)
                 .clip(RoundedCornerShape(10.dp)),
@@ -147,13 +120,13 @@ fun StationSearchItem(station: Station, navController: NavController) {
         Spacer(modifier = Modifier.width(16.dp))
         Column(modifier = Modifier.weight(1f)) {
             Text(
-                text = stringResource(station.stationNameRes),
+                text = station.name,
                 color = colorResource(id = R.color.white),
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold
             )
             Text(
-                text = stringResource(station.presentersRes),
+                text = station.description,
                 color = colorResource(id = R.color.light_gray),
                 fontSize = 14.sp
             )

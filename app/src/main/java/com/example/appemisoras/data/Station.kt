@@ -1,12 +1,14 @@
 package com.example.appemisoras.data
 
-import androidx.annotation.StringRes
+import com.google.firebase.firestore.PropertyName
 
-// Data class to represent a station
+// Data class to represent a station from Firestore
+// It matches the document structure in the 'stations' collection
 data class Station(
-    val logoUrl: String,
-    @param:StringRes val stationNameRes: Int,
-    @param:StringRes val presentersRes: Int,
-    val imageUrl: String,
-    @param:StringRes val descriptionRes: Int
+    val name: String = "",
+    val description: String = "",
+    @get:PropertyName("logoURL") @set:PropertyName("logoURL") var logoURL: String = "",
+    @get:PropertyName("bannerURL") @set:PropertyName("bannerURL") var bannerURL: String = "",
+    @get:PropertyName("streamURL") @set:PropertyName("streamURL") var streamURL: String = "",
+    val order: Int = 0
 )

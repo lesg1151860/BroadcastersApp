@@ -1,8 +1,8 @@
 package com.example.appemisoras.ui.screens
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -15,39 +15,39 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.History
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import coil.compose.rememberAsyncImagePainter
 import com.example.appemisoras.R
 import com.example.appemisoras.data.Station
 
 @Composable
-fun BibliotecaScreen(navController: NavController) {
-    val favoriteStations = listOf(
-        Station(stationNameRes = R.string.station_colegio_x, presentersRes = R.string.presenters_placeholder, logoUrl = "", imageUrl = "", descriptionRes = 0),
-        Station(stationNameRes = R.string.station_colegio_x, presentersRes = R.string.presenters_placeholder, logoUrl = "", imageUrl = "", descriptionRes = 0),
-        Station(stationNameRes = R.string.station_colegio_x, presentersRes = R.string.presenters_placeholder, logoUrl = "", imageUrl = "", descriptionRes = 0),
-        Station(stationNameRes = R.string.station_colegio_x, presentersRes = R.string.presenters_placeholder, logoUrl = "", imageUrl = "", descriptionRes = 0),
-        Station(stationNameRes = R.string.station_colegio_x, presentersRes = R.string.presenters_placeholder, logoUrl = "", imageUrl = "", descriptionRes = 0),
-        Station(stationNameRes = R.string.station_colegio_x, presentersRes = R.string.presenters_placeholder, logoUrl = "", imageUrl = "", descriptionRes = 0),
-        Station(stationNameRes = R.string.station_colegio_x, presentersRes = R.string.presenters_placeholder, logoUrl = "", imageUrl = "", descriptionRes = 0),
-        Station(stationNameRes = R.string.station_colegio_x, presentersRes = R.string.presenters_placeholder, logoUrl = "", imageUrl = "", descriptionRes = 0)
-    )
+fun BibliotecaScreen(navController: NavController, stationsViewModel: StationsViewModel = viewModel()) {
+    val favoriteStations by stationsViewModel.stations.collectAsState()
+    val isLoading by stationsViewModel.isLoading.collectAsState()
+    val error by stationsViewModel.error.collectAsState()
 
     Column(
         modifier = Modifier
@@ -94,14 +94,22 @@ fun BibliotecaScreen(navController: NavController) {
             )
         }
         Spacer(modifier = Modifier.height(17.dp))
-        LazyColumn(
-            modifier = Modifier.weight(1f),
-            verticalArrangement = Arrangement.spacedBy(15.dp)
-        ) {
-            items(favoriteStations) { station ->
-                FavoriteStationItem(station = station, navController = navController)
+
+        if (isLoading) {
+            CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
+        } else if (error != null) {
+            Text(text = error!!, color = Color.Red, modifier = Modifier.align(Alignment.CenterHorizontally))
+        } else {
+            LazyColumn(
+                modifier = Modifier.weight(1f),
+                verticalArrangement = Arrangement.spacedBy(15.dp)
+            ) {
+                items(favoriteStations) { station ->
+                    FavoriteStationItem(station = station, navController = navController)
+                }
             }
         }
+
         Spacer(modifier = Modifier.height(16.dp))
         TextButton(
             onClick = { /* TODO */ },
@@ -123,21 +131,25 @@ fun FavoriteStationItem(station: Station, navController: NavController) {
         modifier = Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Box(
+        Image(
+            painter = rememberAsyncImagePainter(model = station.logoURL),
+            contentDescription = station.name,
             modifier = Modifier
                 .size(60.dp)
-                .background(Color.Gray)
+                .clip(RoundedCornerShape(8.dp))
+                .background(Color.Gray),
+            contentScale = ContentScale.Crop
         )
         Spacer(modifier = Modifier.width(16.dp))
         Column(modifier = Modifier.weight(1f)) {
             Text(
-                text = stringResource(station.stationNameRes),
+                text = station.name,
                 color = Color.White,
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold
             )
             Text(
-                text = "------------",
+                text = station.description,
                 color = Color.LightGray,
                 fontSize = 14.sp
             )
@@ -157,11 +169,4 @@ fun FavoriteStationItem(station: Station, navController: NavController) {
             )
         }
     }
-}
-
-@Preview(showBackground = true, device = "spec:width=411dp,height=891dp")
-@Composable
-fun BibliotecaScreenPreview() {
-    // Previewing this screen directly is not possible because it requires a NavController.
-    // Consider creating a separate composable for previewing that doesn't need a NavController.
 }

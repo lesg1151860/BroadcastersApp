@@ -18,11 +18,15 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
@@ -31,6 +35,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import com.example.appemisoras.R
@@ -38,108 +43,93 @@ import com.example.appemisoras.data.Station
 import com.example.appemisoras.ui.theme.AppEmisorasTheme
 
 @Composable
-fun HomeScreen(navController: NavController) {
-    // Sample list of stations
-    val stations = listOf(
-        Station(
-            logoUrl = "https://placehold.co/63x78",
-            stationNameRes = R.string.station_sagrado_corazon,
-            presentersRes = R.string.presenters,
-            imageUrl = "https://placehold.co/365x146",
-            descriptionRes = R.string.lorem_ipsum
-        ),
-        Station(
-            logoUrl = "https://placehold.co/53x85",
-            stationNameRes = R.string.station_normal_superior,
-            presentersRes = R.string.presenters,
-            imageUrl = "https://placehold.co/365x146",
-            descriptionRes = R.string.lorem_ipsum
-        ),
-        Station( // Added another station to show a list
-            logoUrl = "https://placehold.co/63x78",
-            stationNameRes = R.string.station_sagrado_corazon,
-            presentersRes = R.string.presenters,
-            imageUrl = "https://placehold.co/365x146",
-            descriptionRes = R.string.lorem_ipsum
-        )
-    )
+fun HomeScreen(navController: NavController, stationsViewModel: StationsViewModel = viewModel()) {
+    val stations by stationsViewModel.stations.collectAsState()
+    val isLoading by stationsViewModel.isLoading.collectAsState()
+    val error by stationsViewModel.error.collectAsState()
 
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(colorResource(id = R.color.black))
     ) {
-        LazyColumn(
-            modifier = Modifier.fillMaxSize(),
-            contentPadding = PaddingValues(bottom = 80.dp), // Padding for the bottom nav bar
-            verticalArrangement = Arrangement.spacedBy(28.dp)
-        ) {
-            item {
-                Column {
-                    Spacer(modifier = Modifier.height(43.dp))
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 22.dp),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        Text(
-                            text = stringResource(id = R.string.recent_stations),
-                            color = colorResource(id = R.color.white),
-                            fontSize = 20.sp,
-                            fontWeight = FontWeight.W400,
-                            letterSpacing = 2.sp
-                        )
-                        Text(
-                            text = stringResource(id = R.string.search_similar),
-                            color = colorResource(id = R.color.light_gray),
-                            fontSize = 16.sp,
-                            fontWeight = FontWeight.W400,
-                            letterSpacing = 1.6.sp
-                        )
-                    }
-                    Spacer(modifier = Modifier.height(17.dp))
-                    Box(
-                        modifier = Modifier
-                            .padding(start = 22.dp)
-                            .width(100.dp)
-                            .height(90.dp)
-                            .background(
-                                color = colorResource(id = R.color.white).copy(alpha = 0.2f),
-                                shape = RoundedCornerShape(10.dp)
-                            )
-                    ) {
-                        Column(
-                            modifier = Modifier.fillMaxSize(),
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                            verticalArrangement = Arrangement.Center
+        if (isLoading) {
+            CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+        } else if (error != null) {
+            Text(text = error!!, color = Color.Red, modifier = Modifier.align(Alignment.Center))
+        } else {
+            LazyColumn(
+                modifier = Modifier.fillMaxSize(),
+                contentPadding = PaddingValues(bottom = 80.dp), // Padding for the bottom nav bar
+                verticalArrangement = Arrangement.spacedBy(28.dp)
+            ) {
+                item {
+                    Column {
+                        Spacer(modifier = Modifier.height(43.dp))
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 22.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween
                         ) {
                             Text(
-                                text = stringResource(id = R.string.calasanz_school),
+                                text = stringResource(id = R.string.recent_stations),
                                 color = colorResource(id = R.color.white),
-                                fontSize = 15.sp,
+                                fontSize = 20.sp,
                                 fontWeight = FontWeight.W400,
-                                letterSpacing = 1.5.sp,
-                                textAlign = TextAlign.Center
+                                letterSpacing = 2.sp
+                            )
+                            Text(
+                                text = stringResource(id = R.string.search_similar),
+                                color = colorResource(id = R.color.light_gray),
+                                fontSize = 16.sp,
+                                fontWeight = FontWeight.W400,
+                                letterSpacing = 1.6.sp
                             )
                         }
+                        Spacer(modifier = Modifier.height(17.dp))
+                        Box(
+                            modifier = Modifier
+                                .padding(start = 22.dp)
+                                .width(100.dp)
+                                .height(90.dp)
+                                .background(
+                                    color = colorResource(id = R.color.white).copy(alpha = 0.2f),
+                                    shape = RoundedCornerShape(10.dp)
+                                )
+                        ) {
+                            Column(
+                                modifier = Modifier.fillMaxSize(),
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                                verticalArrangement = Arrangement.Center
+                            ) {
+                                Text(
+                                    text = stringResource(id = R.string.calasanz_school),
+                                    color = colorResource(id = R.color.white),
+                                    fontSize = 15.sp,
+                                    fontWeight = FontWeight.W400,
+                                    letterSpacing = 1.5.sp,
+                                    textAlign = TextAlign.Center
+                                )
+                            }
+                        }
+
+                        Spacer(modifier = Modifier.height(39.dp))
+                        Text(
+                            text = stringResource(id = R.string.tune_in_now),
+                            color = colorResource(id = R.color.white),
+                            fontSize = 30.sp,
+                            fontWeight = FontWeight.W400,
+                            letterSpacing = 3.sp,
+                            modifier = Modifier.padding(start = 22.dp)
+                        )
                     }
-
-                    Spacer(modifier = Modifier.height(39.dp))
-                    Text(
-                        text = stringResource(id = R.string.tune_in_now),
-                        color = colorResource(id = R.color.white),
-                        fontSize = 30.sp,
-                        fontWeight = FontWeight.W400,
-                        letterSpacing = 3.sp,
-                        modifier = Modifier.padding(start = 22.dp)
-                    )
                 }
-            }
 
-            items(stations) { station ->
-                StationCard(station = station, navController = navController)
+                items(stations) { station ->
+                    StationCard(station = station, navController = navController)
+                }
             }
         }
     }
@@ -164,7 +154,7 @@ fun StationCard(station: Station, navController: NavController) {
                     contentAlignment = Alignment.Center
                 ) {
                     Image(
-                        painter = rememberAsyncImagePainter(station.logoUrl),
+                        painter = rememberAsyncImagePainter(station.logoURL),
                         contentDescription = null,
                         modifier = Modifier.size(63.dp, 78.dp)
                     )
@@ -172,14 +162,14 @@ fun StationCard(station: Station, navController: NavController) {
                 Spacer(modifier = Modifier.width(14.dp))
                 Column {
                     Text(
-                        text = stringResource(station.stationNameRes),
+                        text = station.name,
                         color = colorResource(id = R.color.white),
                         fontSize = 20.sp,
                         fontWeight = FontWeight.Bold,
                         letterSpacing = 2.sp
                     )
                     Text(
-                        text = stringResource(station.presentersRes),
+                        text = station.description, // Using description from Station
                         color = colorResource(id = R.color.light_gray),
                         fontSize = 16.sp,
                         letterSpacing = 1.6.sp
@@ -188,7 +178,7 @@ fun StationCard(station: Station, navController: NavController) {
             }
             Spacer(modifier = Modifier.height(20.dp))
             Image(
-                painter = rememberAsyncImagePainter(station.imageUrl),
+                painter = rememberAsyncImagePainter(station.bannerURL),
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
@@ -198,7 +188,7 @@ fun StationCard(station: Station, navController: NavController) {
             )
             Spacer(modifier = Modifier.height(20.dp))
             Text(
-                text = stringResource(station.descriptionRes),
+                text = station.description,
                 color = colorResource(id = R.color.light_gray),
                 fontSize = 16.sp,
                 letterSpacing = 1.6.sp,
@@ -245,8 +235,6 @@ fun StationCard(station: Station, navController: NavController) {
 @Composable
 fun DefaultPreview() {
     AppEmisorasTheme {
-        // Since HomeScreen now needs a NavController, we can't preview it directly.
-        // We can create a dummy NavController for the preview, or preview a different composable.
-        // For now, I'll leave this as is.
+        // Since HomeScreen now needs a NavController and a ViewModel, we can't preview it directly.
     }
 }

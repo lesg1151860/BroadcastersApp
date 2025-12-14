@@ -21,35 +21,43 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Pause
 import androidx.compose.material.icons.filled.SkipNext
 import androidx.compose.material.icons.filled.SkipPrevious
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import coil.compose.rememberAsyncImagePainter
 import com.example.appemisoras.R
-import com.example.appemisoras.data.Station
 import com.example.appemisoras.ui.theme.AppEmisorasTheme
 
 @Composable
-fun PlayerScreen(onBackClick: () -> Unit) {
-    val station = Station(
-        logoUrl = "",
-        stationNameRes = R.string.station_sagrado_corazon,
-        presentersRes = R.string.presenters,
-        imageUrl = "",
-        descriptionRes = R.string.lorem_ipsum
-    )
+fun PlayerScreen(onBackClick: () -> Unit, stationsViewModel: StationsViewModel = viewModel()) {
+    val station by stationsViewModel.selectedStation.collectAsState()
+
+    // Show a loading indicator while the station data is being loaded or if it's null
+    if (station == null) {
+        Box(modifier = Modifier.fillMaxSize().background(Color.Black), contentAlignment = Alignment.Center) {
+            CircularProgressIndicator()
+        }
+        return
+    }
+
+    // We can safely use the station details now
+    val currentStation = station!!
 
     Column(
         modifier = Modifier
@@ -94,25 +102,24 @@ fun PlayerScreen(onBackClick: () -> Unit) {
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.fillMaxWidth()
         ) {
-            Box(
+            Image(
+                painter = rememberAsyncImagePainter(model = currentStation.logoURL),
+                contentDescription = currentStation.name,
                 modifier = Modifier
                     .size(60.dp)
                     .clip(RoundedCornerShape(8.dp))
-                    .background(Color.Gray),
-                contentAlignment = Alignment.Center
-            ) {
-                Text("Icon", color = Color.White)
-            }
+                    .background(Color.Gray)
+            )
             Spacer(modifier = Modifier.width(16.dp))
             Column {
                 Text(
-                    text = stringResource(id = station.stationNameRes),
+                    text = currentStation.name,
                     color = Color.White,
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Bold
                 )
                 Text(
-                    text = stringResource(id = station.presentersRes),
+                    text = "Locutores", // Placeholder for now
                     color = Color.LightGray,
                     fontSize = 16.sp
                 )
@@ -122,16 +129,16 @@ fun PlayerScreen(onBackClick: () -> Unit) {
         Spacer(modifier = Modifier.height(24.dp))
 
         // Banner Image
-        Box(
+        Image(
+            painter = rememberAsyncImagePainter(model = currentStation.bannerURL),
+            contentDescription = "Banner de la emisora",
             modifier = Modifier
                 .fillMaxWidth()
                 .height(180.dp)
                 .clip(RoundedCornerShape(12.dp))
                 .background(Color.Gray),
-            contentAlignment = Alignment.Center
-        ) {
-            Text("Banner", color = Color.White, fontSize = 24.sp)
-        }
+            contentScale = ContentScale.Crop
+        )
 
         Spacer(modifier = Modifier.height(32.dp))
 
@@ -171,7 +178,7 @@ fun PlayerScreen(onBackClick: () -> Unit) {
 
         // Description
         Text(
-            text = stringResource(id = station.descriptionRes),
+            text = currentStation.description,
             color = Color.White,
             fontSize = 16.sp,
             textAlign = TextAlign.Center
@@ -183,6 +190,6 @@ fun PlayerScreen(onBackClick: () -> Unit) {
 @Composable
 fun PlayerScreenPreview() {
     AppEmisorasTheme {
-        PlayerScreen(onBackClick = {})
+       // PlayerScreen(onBackClick = {})
     }
 }
