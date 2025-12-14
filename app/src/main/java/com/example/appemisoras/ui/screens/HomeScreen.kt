@@ -128,7 +128,7 @@ fun HomeScreen(navController: NavController, stationsViewModel: StationsViewMode
                 }
 
                 items(stations) { station ->
-                    StationCard(station = station, navController = navController)
+                    StationCard(station = station, navController = navController, stationsViewModel = stationsViewModel)
                 }
             }
         }
@@ -137,13 +137,17 @@ fun HomeScreen(navController: NavController, stationsViewModel: StationsViewMode
 
 
 @Composable
-fun StationCard(station: Station, navController: NavController) {
+fun StationCard(station: Station, navController: NavController, stationsViewModel: StationsViewModel) {
     Box(
         modifier = Modifier
             .padding(horizontal = 22.dp)
             .fillMaxWidth()
             .height(413.dp)
             .background(color = colorResource(id = R.color.dark_gray), shape = RoundedCornerShape(20.dp))
+            .clickable { 
+                stationsViewModel.selectStation(station)
+                navController.navigate(AppScreens.Player.route) 
+            }
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
@@ -169,7 +173,7 @@ fun StationCard(station: Station, navController: NavController) {
                         letterSpacing = 2.sp
                     )
                     Text(
-                        text = station.description, // Using description from Station
+                        text = station.institution, // Using institution from Station
                         color = colorResource(id = R.color.light_gray),
                         fontSize = 16.sp,
                         letterSpacing = 1.6.sp
@@ -217,7 +221,10 @@ fun StationCard(station: Station, navController: NavController) {
                     contentDescription = stringResource(id = R.string.cd_play),
                     modifier = Modifier
                         .size(44.dp)
-                        .clickable { navController.navigate(AppScreens.Player.route) }
+                        .clickable { 
+                            stationsViewModel.selectStation(station)
+                            navController.navigate(AppScreens.Player.route) 
+                        }
                 )
                 Spacer(modifier = Modifier.width(10.dp))
                 Image(
