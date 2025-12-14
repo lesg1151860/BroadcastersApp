@@ -32,11 +32,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.appemisoras.R
 import com.example.appemisoras.data.Station
 
 @Composable
-fun BibliotecaScreen() {
+fun BibliotecaScreen(navController: NavController) {
     val favoriteStations = listOf(
         Station(stationNameRes = R.string.station_colegio_x, presentersRes = R.string.presenters_placeholder, logoUrl = "", imageUrl = "", descriptionRes = 0),
         Station(stationNameRes = R.string.station_colegio_x, presentersRes = R.string.presenters_placeholder, logoUrl = "", imageUrl = "", descriptionRes = 0),
@@ -98,7 +99,7 @@ fun BibliotecaScreen() {
             verticalArrangement = Arrangement.spacedBy(15.dp)
         ) {
             items(favoriteStations) { station ->
-                FavoriteStationItem(station = station)
+                FavoriteStationItem(station = station, navController = navController)
             }
         }
         Spacer(modifier = Modifier.height(16.dp))
@@ -117,7 +118,7 @@ fun BibliotecaScreen() {
 }
 
 @Composable
-fun FavoriteStationItem(station: Station) {
+fun FavoriteStationItem(station: Station, navController: NavController) {
     Row(
         modifier = Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically
@@ -143,7 +144,7 @@ fun FavoriteStationItem(station: Station) {
         }
         Spacer(modifier = Modifier.width(16.dp))
         IconButton(
-            onClick = { /*TODO*/ },
+            onClick = { navController.navigate(AppScreens.Player.route) },
             modifier = Modifier
                 .size(48.dp)
                 .background(Color.White, CircleShape)
@@ -161,5 +162,6 @@ fun FavoriteStationItem(station: Station) {
 @Preview(showBackground = true, device = "spec:width=411dp,height=891dp")
 @Composable
 fun BibliotecaScreenPreview() {
-    BibliotecaScreen()
+    // Previewing this screen directly is not possible because it requires a NavController.
+    // Consider creating a separate composable for previewing that doesn't need a NavController.
 }
