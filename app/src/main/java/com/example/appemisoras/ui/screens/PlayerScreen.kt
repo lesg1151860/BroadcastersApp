@@ -40,7 +40,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import coil.compose.rememberAsyncImagePainter
+import coil.compose.AsyncImage
 import com.example.appemisoras.R
 import com.example.appemisoras.ui.theme.AppEmisorasTheme
 
@@ -102,9 +102,11 @@ fun PlayerScreen(onBackClick: () -> Unit, stationsViewModel: StationsViewModel =
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.fillMaxWidth()
         ) {
-            Image(
-                painter = rememberAsyncImagePainter(model = currentStation.logoURL),
+            AsyncImage(
+                model = currentStation.logoURL,
                 contentDescription = currentStation.name,
+                placeholder = painterResource(id = R.drawable.ic_station_placeholder),
+                error = painterResource(id = R.drawable.ic_station_placeholder),
                 modifier = Modifier
                     .size(60.dp)
                     .clip(RoundedCornerShape(8.dp))
@@ -129,9 +131,11 @@ fun PlayerScreen(onBackClick: () -> Unit, stationsViewModel: StationsViewModel =
         Spacer(modifier = Modifier.height(24.dp))
 
         // Banner Image
-        Image(
-            painter = rememberAsyncImagePainter(model = currentStation.bannerURL),
+        AsyncImage(
+            model = currentStation.bannerURL,
             contentDescription = "Banner de la emisora",
+            placeholder = painterResource(id = R.drawable.ic_station_placeholder),
+            error = painterResource(id = R.drawable.ic_station_placeholder),
             modifier = Modifier
                 .fillMaxWidth()
                 .height(180.dp)
