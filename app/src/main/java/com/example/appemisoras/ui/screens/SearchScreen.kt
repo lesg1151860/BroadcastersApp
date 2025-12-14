@@ -2,6 +2,7 @@ package com.example.appemisoras.ui.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -93,7 +94,7 @@ fun SearchScreen(navController: NavController, stationsViewModel: StationsViewMo
                     verticalArrangement = Arrangement.spacedBy(15.dp)
                 ) {
                     items(stations.filter { it.name.contains(searchQuery, ignoreCase = true) }) { station ->
-                        StationSearchItem(station = station, navController = navController)
+                        StationSearchItem(station = station, navController = navController, stationsViewModel = stationsViewModel)
                     }
                 }
             }
@@ -102,11 +103,15 @@ fun SearchScreen(navController: NavController, stationsViewModel: StationsViewMo
 }
 
 @Composable
-fun StationSearchItem(station: Station, navController: NavController) {
+fun StationSearchItem(station: Station, navController: NavController, stationsViewModel: StationsViewModel) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 8.dp),
+            .padding(vertical = 8.dp)
+            .clickable { // Navigate on row click
+                stationsViewModel.selectStation(station)
+                navController.navigate(AppScreens.Player.route)
+            },
         verticalAlignment = Alignment.CenterVertically
     ) {
         Image(
@@ -126,14 +131,17 @@ fun StationSearchItem(station: Station, navController: NavController) {
                 fontWeight = FontWeight.Bold
             )
             Text(
-                text = station.description,
+                text = station.institution, // Using institution field
                 color = colorResource(id = R.color.light_gray),
                 fontSize = 14.sp
             )
         }
         Spacer(modifier = Modifier.width(16.dp))
         IconButton(
-            onClick = { navController.navigate(AppScreens.Player.route) },
+            onClick = { 
+                stationsViewModel.selectStation(station)
+                navController.navigate(AppScreens.Player.route) 
+            },
             modifier = Modifier
                 .size(48.dp)
                 .background(Color.White, CircleShape)
