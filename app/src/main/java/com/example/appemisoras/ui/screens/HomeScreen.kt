@@ -43,7 +43,7 @@ import com.example.appemisoras.data.Station
 import com.example.appemisoras.ui.theme.AppEmisorasTheme
 
 @Composable
-fun HomeScreen(navController: NavController, stationsViewModel: StationsViewModel = viewModel()) {
+fun HomeScreen(navController: NavController, stationsViewModel: StationsViewModel) {
     val stations by stationsViewModel.stations.collectAsState()
     val isLoading by stationsViewModel.isLoading.collectAsState()
     val error by stationsViewModel.error.collectAsState()

@@ -13,9 +13,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -44,6 +44,7 @@ val items = listOf(
 @Composable
 fun AppNavigation() {
     val navController = rememberNavController()
+    val stationsViewModel: StationsViewModel = viewModel()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
 
@@ -89,11 +90,11 @@ fun AppNavigation() {
             startDestination = AppScreens.Home.route,
             modifier = Modifier.padding(innerPadding)
         ) {
-            composable(AppScreens.Home.route) { HomeScreen(navController) }
-            composable(AppScreens.Search.route) { SearchScreen(navController) }
-            composable(AppScreens.Library.route) { BibliotecaScreen(navController) }
+            composable(AppScreens.Home.route) { HomeScreen(navController, stationsViewModel) }
+            composable(AppScreens.Search.route) { SearchScreen(navController, stationsViewModel) }
+            composable(AppScreens.Library.route) { BibliotecaScreen(navController, stationsViewModel) }
             composable(AppScreens.Account.route) { TuCuentaScreen() }
-            composable(AppScreens.Player.route) { PlayerScreen(onBackClick = { navController.popBackStack() }) }
+            composable(AppScreens.Player.route) { PlayerScreen(onBackClick = { navController.popBackStack() }, stationsViewModel) }
         }
     }
 }
